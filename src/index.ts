@@ -6,6 +6,7 @@ import { globalErrorHandler } from "./api/middlewares/global-error-handling-midd
 import { loggerMiddleware } from "./api/middlewares/logger-middleware";
 import { connectDB } from "./infrastructure/db";
 import { initializeEnergyCron } from "./infrastructure/energy-generation-cron";
+import weatherRouter from "./api/weather";
 
 const server = express();
 server.use(cors({ origin: "http://localhost:5173" }));
@@ -15,6 +16,7 @@ server.use(loggerMiddleware);
 server.use(express.json());
 
 server.use("/api/energy-generation-records", energyGenerationRecordRouter);
+server.use("/api/weather", weatherRouter);
 
 server.use(globalErrorHandler);
 
