@@ -61,9 +61,43 @@ async function seed() {
 
       // Add some random variation (±20%)
       const variation = 0.8 + Math.random() * 0.4;
-      const energyGenerated = Math.round(
+      let energyGenerated = Math.round(
         baseEnergy * timeMultiplier * variation
       );
+
+      // --- ANOMALY INJECTION ---
+      const anomalyChance = Math.random();
+
+      // 1. Nighttime Generation (Sensor Malfunction)
+      // Chance: 5% during night hours
+      if ((hour < 6 || hour > 18) && anomalyChance < 0.05) {
+        energyGenerated = Math.round(5 + Math.random() * 15); // Random 5-20 kWh at night
+        console.log(`[ANOMALY] Nighttime Gen at ${currentDate.toISOString()}: ${energyGenerated} kWh`);
+      }
+
+      // 2. Zero Generation During Peak (Critical Failure)
+      // Chance: 2% during peak hours
+      if (hour >= 10 && hour <= 14 && anomalyChance >= 0.05 && anomalyChance < 0.07) {
+        energyGenerated = 0;
+        console.log(`[ANOMALY] Zero Peak Gen at ${currentDate.toISOString()}`);
+      }
+
+      // 3. Sudden Performance Drop
+      // Chance: 2% during daylight
+      if (hour >= 6 && hour <= 16 && anomalyChance >= 0.07 && anomalyChance < 0.09) {
+        energyGenerated = Math.round(energyGenerated * 0.1); // Drop to 10%
+        console.log(`[ANOMALY] Sudden Drop at ${currentDate.toISOString()}: ${energyGenerated} kWh`);
+      }
+
+      // 4. Inverter Clipping (Capacity Limit)
+      // Chance: 1% during peak
+      if (hour === 12 && anomalyChance > 0.99) {
+        energyGenerated = 350;
+      }
+      // Simple clipping simulation persistence
+      if (records.length > 0 && records[records.length - 1].energyGenerated === 350 && Math.random() > 0.3) {
+        energyGenerated = 350;
+      }
 
       records.push({
         serialNumber: serialNumber,

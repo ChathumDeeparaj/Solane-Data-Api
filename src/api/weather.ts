@@ -163,7 +163,7 @@ router.get("/", async (req, res) => {
       throw new Error(`Open-Meteo API error: ${response.statusText}`);
     }
 
-    const data: OpenMeteoResponse = await response.json();
+    const data = (await response.json()) as OpenMeteoResponse;
 
     const solarInfo = getSolarCondition(
       data.current.cloud_cover,
