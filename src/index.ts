@@ -9,7 +9,7 @@ import { initializeEnergyCron } from "./infrastructure/energy-generation-cron";
 import weatherRouter from "./api/weather";
 
 const server = express();
-server.use(cors({ origin: "http://localhost:5173" }));
+server.use(cors({ origin: "https://fed-4-front-end-chathum.netlify.app" }));
 
 server.use(loggerMiddleware);
 
