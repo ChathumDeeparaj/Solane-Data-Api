@@ -54,3 +54,12 @@ Based on the `seed.ts` script logic and available data:
 | **CRITICAL** | Red | Major loss of function. Immediate action needed. | Push Notification + Dashboard Alert |
 | **WARNING** | Orange | Performance degraded or data suspect. | Dashboard Alert |
 | **INFO** | Blue | Optimization opportunity or minor observation. | Dashboard Note |
+
+Backend Repo :- 
+
+Data Api Repo :-
+
+- Deployed links of your
+    - Front-end
+    - Back-end
+    - Data-API
