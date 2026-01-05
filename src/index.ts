@@ -18,6 +18,19 @@ server.use(express.json());
 server.use("/api/energy-generation-records", energyGenerationRecordRouter);
 server.use("/api/weather", weatherRouter);
 
+// Debug Route for Seeding in Production
+import { seed } from "./infrastructure/seed";
+server.get("/api/debug/seed", async (req, res) => {
+  try {
+    console.log("Triggering manual seed...");
+    await seed();
+    res.json({ message: "Seeding completed successfully" });
+  } catch (error: any) {
+    console.error("Seeding failed:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 server.use(globalErrorHandler);
 
 connectDB();

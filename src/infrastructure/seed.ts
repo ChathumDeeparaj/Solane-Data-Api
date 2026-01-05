@@ -126,4 +126,9 @@ async function seed() {
   }
 }
 
-seed();
+// Only run if called directly
+if (require.main === module) {
+  seed();
+}
+
+export { seed };
