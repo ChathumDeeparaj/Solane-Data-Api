@@ -16,10 +16,10 @@ async function seed() {
     // Clear existing data
     await EnergyGenerationRecord.deleteMany({});
 
-    // Create historical energy generation records from Aug 1, 2025 8pm to Oct 12, 2025 8am every 2 hours
+    // Create historical energy generation records from Aug 1, 2025 8pm to Jan 6, 2026 8am every 2 hours
     const records = [];
     const startDate = new Date("2025-08-01T08:00:00Z"); // August 1, 2025 8pm UTC
-    const endDate = new Date("2025-12-20T08:00:00Z"); // December 20, 2025 8am UTC
+    const endDate = new Date("2026-01-06T08:00:00Z"); // January 6, 2026 8am UTC
 
     let currentDate = new Date(startDate);
     let recordCount = 0;
