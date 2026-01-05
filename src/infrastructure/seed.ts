@@ -65,6 +65,11 @@ async function seed() {
         baseEnergy * timeMultiplier * variation
       );
 
+      // Cap at 10,000 kWh as requested
+      if (energyGenerated > 10000) {
+        energyGenerated = 10000;
+      }
+
       // --- ANOMALY INJECTION ---
       const anomalyChance = Math.random();
 
