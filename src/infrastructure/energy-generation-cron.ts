@@ -43,7 +43,7 @@ function calculateEnergyGeneration(timestamp: Date): number {
   const variation = 0.8 + Math.random() * 0.4;
   let energyGenerated = Math.round(baseEnergy * timeMultiplier * variation);
 
-  // --- ANOMALY INJECTION (Live Data) ---
+  // --- ANOMALY INJECTION (for demo/testing) ---
   const anomalyChance = Math.random();
 
   // 1. Nighttime Generation (Sensor Malfunction)
@@ -71,6 +71,7 @@ function calculateEnergyGeneration(timestamp: Date): number {
   // Chance: 1% during peak
   if (hour === 12 && anomalyChance > 0.99) {
     energyGenerated = 350;
+    console.log(`[ANOMALY] Inverter Clipping detected`);
   }
 
   return energyGenerated;
@@ -109,8 +110,8 @@ async function generateNewRecord() {
  * Initialize the cron scheduler to generate energy records every 2 hours
  */
 export const initializeEnergyCron = () => {
-  // Run every minute (for real-time demo)
-  const schedule = process.env.ENERGY_CRON_SCHEDULE || '* * * * *';
+  // Run every 2 hours on the hour (0 */2 * * *)
+  const schedule = process.env.ENERGY_CRON_SCHEDULE || '0 */2 * * *';
 
   cron.schedule(schedule, async () => {
     await generateNewRecord();
